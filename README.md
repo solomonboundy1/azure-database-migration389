@@ -2,9 +2,11 @@
 
 ## Azure Data Migration Project
 
-# Overview
+## Overview
 
 This project involves migrating and setting up a production environment using Azure SQL. It encompasses steps to configure a Windows Virtual Machine (VM), installation of SQL Server, and restoring the AdventureWorks database.
+
+# Milestone 1:
 
 ## Setup and Configuration
 
@@ -41,3 +43,5 @@ Resources
 
 Note
 Ensure proper firewall rules and network settings are configured for secure connectivity.
+
+# Milestone 2:
