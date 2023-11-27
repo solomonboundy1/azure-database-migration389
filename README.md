@@ -6,7 +6,7 @@
 
 This project involves migrating and setting up a production environment using Azure SQL. It encompasses steps to configure a Windows Virtual Machine (VM), installation of SQL Server, and restoring the AdventureWorks database.
 
-# Milestone 1:
+# Milestone 2:
 
 ## Setup and Configuration
 
@@ -22,6 +22,7 @@ Establish a secure connection using RDP protocol.
 Use Microsoft Remote Desktop for access.
 
 **3. Installation of SQL Server and SSMS**
+Download and Install latest versions of SQL Server and SSMS
 SQL Server and SSMS:
 Installed on the VM to facilitate database management.
 
@@ -44,4 +45,47 @@ Resources
 Note
 Ensure proper firewall rules and network settings are configured for secure connectivity.
 
-# Milestone 2:
+# Milestone 3: Migrate to Azure SQL Database
+
+## Steps for Migration
+
+1. **Set Up Azure SQL Database**
+
+   - Establish an Azure SQL Database, designated as the target for migrating the on-premise database.
+   - Configure the associated SQL Server with SQL login authentication.
+   - Verify and adjust the SQL Server's firewall settings, including adding your IP address for secure access.
+
+2. **Configure Azure Data Studio**
+
+   - Install and set up Azure Data Studio on your production Windows VM.
+
+3. **Connect to Azure SQL Database**
+
+   - Utilize Azure Data Studio to create a connection to the newly established Azure SQL Database.
+   - This connection facilitates schema and data migration between the databases.
+
+4. **Schema Migration with Schema Compare**
+
+   - Integrate the SQL Server Schema Compare extension in Azure Data Studio.
+   - Employ this extension to compare and move the schema from the on-premise database to Azure SQL.
+
+5. **Data Migration via SQL Migration Extension**
+
+   - Install and leverage the Azure SQL Migration extension in Azure Data Studio.
+   - Facilitate a smooth transfer of data from the on-premise database to Azure SQL Database.
+
+6. **Validation and Integrity Check**
+   - Conduct a comprehensive validation to ensure the database migration's success.
+   - Examine the migrated database thoroughly, reviewing data, schema, and configurations for a successful migration.
+
+## Usage Instructions
+
+**Accessing the Production Environment:**
+
+Establish a Remote Desktop connection to the production-vm.
+For Database Management:
+
+Utilize Azure Data Studio to manage and operate the database.
+
+**Note:**
+Ensure proper firewall configurations and network settings for secure connectivity.
