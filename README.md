@@ -45,9 +45,9 @@ Resources
 Note
 Ensure proper firewall rules and network settings are configured for secure connectivity.
 
-# Milestone 3: Migrate to Azure SQL Database
+# Milestone 3:
 
-## Steps for Migration
+## Migrate to Azure SQL Database
 
 1. **Set Up Azure SQL Database**
 
@@ -89,3 +89,30 @@ Utilize Azure Data Studio to manage and operate the database.
 
 **Note:**
 Ensure proper firewall configurations and network settings for secure connectivity.
+
+# Milestone 4:
+
+## Data Backup and Restore
+
+1. **Create Full Backup of Production Database**
+
+   - Generate a full backup of the production database hosted on the Windows VM. This serves as a safety net for unforeseen issues.
+   - Store the resultant backup file in a designated location on your computer.
+
+2. **Configure Azure Blob Storage Account**
+
+   - Configure an Azure Blob Storage account as a secure online repository for database backups.
+   - Upload the previously created database backup file to the Blob Storage container, ensuring an extra layer of backup protection through remote redundancy.
+
+3. **Setup Development Environment**
+
+   - Replicate a controlled and isolated environment, like a sandbox, for controlled experimentation and development.
+   - Provision a new Windows VM mirroring the development setup.
+   - Install SQL Server on this VM to mirror necessary database infrastructure.
+   - Restore the database backup onto this new "sandbox" environment to safely explore new concepts without impacting production data.
+
+4. **Automate Development Database Backups**
+   - Utilize SSMS on your development Windows VM to establish a Management Task for automating regular backups.
+   - Configure a weekly backup schedule to consistently protect evolving work and simplify recovery if necessary for the development environment.
+
+**Note:** Ensure proper configuration and monitoring of backup processes to maintain data integrity and security.
