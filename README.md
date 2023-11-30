@@ -143,3 +143,17 @@ Connect via Remote Desktop to the production-vm.
 Database Management:
 
 Leverage Azure Data Studio for database operations.
+
+# Milestone 6:
+
+## Implement Geo-Replication and Failover
+
+1. **Setting Up Geo-Replication**
+
+   - Initiate the setup of geo-replication for your production Azure SQL Database. This process involves creating a synchronized replica of your primary database.
+   - The replica will be hosted on another SQL server located in a different geographical region than your primary database server.
+
+2. **Simulating Real-world Challenges**
+   - Orchestrate a planned failover to the secondary region to transition operations to the secondary copy.
+   - Evaluate the availability and data consistency of the failover database during this process.
+   - Perform a failback to the primary region.
