@@ -116,3 +116,30 @@ Ensure proper firewall configurations and network settings for secure connectivi
    - Configure a weekly backup schedule to consistently protect evolving work and simplify recovery if necessary for the development environment.
 
 **Note:** Ensure proper configuration and monitoring of backup processes to maintain data integrity and security.
+
+# Milestone 5:
+
+## Simulation of Data Integrity Loss
+
+1. **Data Integrity Simulation:**
+   - Intentionally remove crucial data from the production database to mimic a scenario of compromised data integrity.
+   - Create detailed documentation outlining the specifics of this simulated data loss for future reference and recovery testing.
+     Find the documentation by clicking [here](data_corruption_process.docx)
+   - After the simulation, validate its impact by examining the Azure SQL Database using the established connection in Azure Data Studio.
+
+## Database Restoration and Validation
+
+2. **Database Recovery:**
+   - Use Azure SQL Database Backup to restore the production database to a point just before the simulated data loss occurred.
+   - Verify the successful restoration by reviewing the restored data through the Azure Data Studio connection.
+   - As the prior production database lacks vital data, the restored database becomes the new production database.
+   - Post-restoration, delete the database affected by data loss from the Azure portal.
+
+## Usage Instructions
+
+**Accessing the Production Environment:**
+
+Connect via Remote Desktop to the production-vm.
+Database Management:
+
+Leverage Azure Data Studio for database operations.
