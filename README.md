@@ -11,39 +11,82 @@ This project involves migrating and setting up a production environment using Az
 ## Setup and Configuration
 
 **1. Setting Up Windows Virtual Machine**
+
 VM Details:
-OS: Windows 11
-Name: production-vm
+
+OS: Windows 11 <br/>
+Name: production-vm<br>
 Resource Group: my-vm-rg
 
-**2. Remote Connection to VM**
+**Creating the VM**
+
+To create the VM:
+
+- From the Azure portal homepage, select the 'Create a resource' button from the top left corner of the dashboard.
+- Click on 'Virtual machine' to start the creation process.
+- Choose the appropriate subscription and allocate the VM to a specific resource group, e.g., 'my-vm-rg'.
+- Select the region geographically closest to you.
+- Specify an administrator username and password that will be used to log in to the virtual machine's operating system.
+- Ensure Remote Desktop Protocol (RDP) is enabled, allowing access using the administrator credentials.
+- Review and create the VM, and download the private key.
+  <br>
+  <br>
+
+**2. Remote Connection to VM**<br>
+
 Remote Desktop Connection:
 Establish a secure connection using RDP protocol.
 Use Microsoft Remote Desktop for access.
 
-**3. Installation of SQL Server and SSMS**
+**Connecting to the VM**
+
+To connect to the VM:
+
+- Navigate to the resource page under the 'Connect' panel for RDP connection and follow the instructions.
+- Download the RDP connection file using the 'Download RDP file' button.
+- Once downloaded, double-click the RDP file and use the username and password set up earlier.
+  <br>
+  <br>
+
+**3. Installation of SQL Server and SSMS**<br>
+
 Download and Install latest versions of SQL Server and SSMS
-SQL Server and SSMS:
-Installed on the VM to facilitate database management.
+
+**Installing SSMS**
+
+To install SSMS:
+
+- Download the SQL Server Developer installer from the Microsoft Download Center onto your VM.
+- Choose the 'Basic' option during installation.
+- After installing SQL Server, proceed to install SQL Server Management Studio (SSMS) on the VM using the 'Install SSMS' button.
+- Launch SSMS and connect to the VM via the popup window by clicking the 'Connect' button using the provided credentials.
 
 **4. Database Restoration**
 AdventureWorks Database:
-Restored from Backup File:
-[AdventureWorks Database Backup File](https://aicore-portal-public-prod-307050600709.s3.eu-west-1.amazonaws.com/project-files/93dd5a0c-212d-48eb-ad51-df521a9b4e9c/AdventureWorks2022.bak)
+Restored from [this](https://aicore-portal-public-prod-307050600709.s3.eu-west-1.amazonaws.com/project-files/93dd5a0c-212d-48eb-ad51-df521a9b4e9c/AdventureWorks2022.bak) Backup File.
+
 Contains a comprehensive sample database for a fictional manufacturing company.
+
+**Restoration process**
+
+To restore the database:
+
+- Download the AdventureWorks2022.bak file locally on your VM.
+- Copy the downloaded file to `C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\Backup`.
+- In SQL Server Management Studio, right-click on the 'Databases' node in the Object Explorer and choose 'Restore Database...'.
+- In the 'Restore Database' window, select the 'Device' option, click the '...' button to select the backup files to restore, choose the full backup, and click 'OK' to start the restoration process.
 
 ## Usage Instructions
 
 **Accessing the Production Environment:**
 
-Use Remote Desktop to connect to the production-vm.
-Database Management:
+Connect via Remote Desktop to the production-vm.
+For Database Management:
 
-Utilize SQL Server Management Studio (SSMS) for database operations.
-Resources
+Use SQL Server Management Studio (SSMS) to manage and operate the database.
 
-Note
-Ensure proper firewall rules and network settings are configured for secure connectivity.
+**Note:**
+Ensure proper firewall configurations and network settings for secure connectivity.
 
 # Milestone 3:
 
@@ -157,3 +200,38 @@ Leverage Azure Data Studio for database operations.
    - Orchestrate a planned failover to the secondary region to transition operations to the secondary copy.
    - Evaluate the availability and data consistency of the failover database during this process.
    - Perform a failback to the primary region.
+
+# Milestone 7:
+
+## Enabling Microsoft Entra ID Authentication
+
+1. **Configure Microsoft Entra ID as Trusted Identity Provider**
+   - Navigate to the server and access Microsoft Entra ID in the side pane.
+   - Click on "Set Admin" and select the Microsoft account, then save the settings.
+
+### User Account Creation and Access Configuration
+
+2. **Create DB Reader User Account in Microsoft Entra ID**
+
+   - Go to the Entra ID homepage and select "Add" then create a new user.
+   - Generate a user named "DB_Reader".
+
+3. **Assign Permissions Using Azure Data Studio**
+   - In Azure Data Studio within the 'production-vm', right-click on the 'adworks1' server and choose 'New Query'.
+   - Execute the following query to grant the `db_datareader` role to the DB_Reader user:
+     ```sql
+     CREATE USER [DB_Reader@YourDomain.com] FROM EXTERNAL PROVIDER;
+     ALTER ROLE db_datareader ADD MEMBER [DB_Reader@YourDomain.com];
+     ```
+     **Note:** ensure you replace 'YourDomain' with your domain.
+
+### Validating User Access and Permissions
+
+4. **Testing User Access**
+   - Disconnect from the database if signed in with admin account.
+   - Sign in using the DB_Reader account. Upon login, change the password if prompted.
+   - Run ALTER queries to verify the assigned privileges. Inability to alter tables confirms the privilege setup.
+
+## DB UML
+
+![DB_UML](Azure%20Database%20Migration%20UML.jpeg)
