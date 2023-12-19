@@ -14,11 +14,21 @@ I setup two virtual machines on Azure, a production one and a testing one called
 
 The primary objective was to transition the database from an on-premise setup to Azure, leveraging its capabilities for improved data management and accessibility. This migration aimed to optimize data processing while ensuring data security and scalability in a cloud environment.
 
-I achieved this first by installing
+I achieved this first by using the SQL Server Schema Compare extension in Azure Data Studio in order to replicate the local database's schemas onto my Azure server along with any constraints the database has.
+
+Next, I transferred the data from the local database into the empty database on the server using Azure SQL Migration extension.
 
 ### 3. Security Measures
 
-To fortify the database against unauthorized access and ensure data integrity, Microsoft Entra ID integration was implemented. This integration defined access roles, allowing only authorized personnel to make updates or alterations to the database, significantly enhancing its security posture.
+To fortify the database against unauthorized access and ensure data integrity, Microsoft Entra ID integration was implemented. This integration defined access roles, allowing only authorized personnel to make updates or alterations to the database, significantly enhancing its security posture. I created an account called 'DB_Reader' and assigned it read only privileges to test the restriction:
+
+![db reader user image](dbreader1.png)
+
+I then tested the restrictions on the db_reader account:
+
+![db reader delete attempt](dbreader2.png)
+
+The DB_Reader was unable to delete entries from the tables.
 
 ### 4. Automated Backups
 
@@ -48,10 +58,20 @@ FROM HumanResources.EmployeePayHistory;
 
 Which returned the results prior to the backup, ensuring the success of disaster recovery. Now the newly restored database has become my main database.
 
+![Employee Pay History Picture](EPH.png)
+
+From the image above, you can see that the deleted and corrupted entries have been restored.
+
 ### 6. Geo-Replication and Failover
 
 Implementing geo-replication and configuring failover procedures were essential steps to ensure data availability in challenging scenarios. <br/> <br/>
 Through the Azure portal I navigated to my database via the SQL Database dashboard and created a replica of my database on a new server to host the replica. I set the region of this server to US East. By doing this, if an outtage or unexpected interference happens within my main server in the UK South region, the workload will be swithed from the primary region (UK) to the secondary region (US) and will tailback to the primary region once service has been restored. I did this to provide redundancy and resilience in case of network issues or outages.
+
+The image below shows my failover group:
+
+![failover group pic](failovergroup.png)
+
+From this page I was able to simulate a failover to the US server which contained an up-to-date instance of my database.
 
 ## Key Objectives Achieved
 
